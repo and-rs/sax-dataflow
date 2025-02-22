@@ -25,7 +25,7 @@
         ];
       in {
         devShells.default = pkgs.mkShell {
-          buildInputs = [ pkgs.nodejs_22 ]
+          buildInputs = [ pkgs.nodejs_22 pkgs.awscli2 ]
             ++ scripts; # Adding scripts to the environment
         };
       });
