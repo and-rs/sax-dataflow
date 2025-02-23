@@ -9,14 +9,14 @@ export class BackendStack extends Stack {
     super(scope, id, props);
 
     const fn = new NodejsFunction(this, "lambda", {
-      entry: "lambda/index.ts",
+      entry: "src/lambda.ts",
       handler: "handler",
       runtime: lambda.Runtime.NODEJS_22_X,
     });
     fn.addFunctionUrl({
       authType: lambda.FunctionUrlAuthType.NONE,
     });
-    new apigw.LambdaRestApi(this, "myapi", {
+    new apigw.LambdaRestApi(this, "backend-api", {
       handler: fn,
     });
   }
