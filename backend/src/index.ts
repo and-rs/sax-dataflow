@@ -34,7 +34,7 @@ app.get("/", async (c) => {
     await db.delete(usersTable).where(eq(usersTable.email, user.email));
     console.log("User deleted!");
 
-    return c.json({});
+    return c.json({ users });
   } catch (error) {
     const { name, message } = error as Error;
     console.error("Error:", error);

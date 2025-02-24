@@ -19,11 +19,17 @@ async function initializeDatabase() {
       });
 
       db = drizzle({ client: pool, schema });
-      await migrate(db, { migrationsFolder: path.join(__dirname, "drizzle") });
+
+      if (process.env.NODE_ENV !== "dev") {
+        console.log("MIGRATED DATABASE");
+        await migrate(db, {
+          migrationsFolder: path.join(__dirname, "drizzle"),
+        });
+      }
 
       console.log("DATABASE IS SET UP");
     } catch (error) {
-      console.error("ERROR INITIALIZING DATABASE:", error);
+      console.error("ERROR INITIALIZING DATABASE ->", error);
       db = null;
       throw error;
     }

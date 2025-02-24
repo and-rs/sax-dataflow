@@ -2,6 +2,7 @@ import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Construct } from "constructs";
 
 import * as cdk from "aws-cdk-lib";
+import * as apigw from "aws-cdk-lib/aws-apigateway";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as rds from "aws-cdk-lib/aws-rds";
@@ -67,7 +68,6 @@ export class SaxStack extends cdk.Stack {
       handler: "handler",
       entry: "src/lambda/index.ts",
       timeout: cdk.Duration.seconds(60),
-
       bundling: {
         commandHooks: {
           beforeBundling() {
@@ -85,18 +85,22 @@ export class SaxStack extends cdk.Stack {
           },
         },
       },
-
       vpc: vpc,
       vpcSubnets: {
         subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
       },
-
       environment: {
         DB_HOST: dbInstance.dbInstanceEndpointAddress,
         DB_PORT: dbInstance.dbInstanceEndpointPort,
         DB_SECRET_ARN: dbSecret.secretArn,
         DB_NAME,
       },
+    });
+    fn.addFunctionUrl({
+      authType: lambda.FunctionUrlAuthType.NONE,
+    });
+    new apigw.LambdaRestApi(this, "apiGateway", {
+      handler: fn,
     });
 
     dbSecret.grantRead(fn);
