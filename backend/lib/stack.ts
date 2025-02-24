@@ -74,7 +74,11 @@ export class SaxStack extends cdk.Stack {
             return [];
           },
           afterBundling(inputDir: string, outputDir: string): string[] {
-            return [`cp ${inputDir}/global-bundle.pem ${outputDir}`];
+            return [
+              `cp ${inputDir}/global-bundle.pem ${outputDir}`,
+              "pnpm drizzle-kit generate",
+              `cp -r ${inputDir}/drizzle ${outputDir}`,
+            ];
           },
           beforeInstall() {
             return [];

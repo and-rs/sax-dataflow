@@ -1,6 +1,5 @@
 import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
-import * as fs from "node:fs";
 
 const isDev = process.env.NODE_ENV === "dev";
 
@@ -29,19 +28,11 @@ if (isDev) {
   }
 }
 
-const ssl = isDev
-  ? false
-  : {
-      rejectUnauthorized: true,
-      ca: fs.readFileSync("./global-bundle.pem", { encoding: "utf8" }),
-    };
-
 export default defineConfig({
   out: "./drizzle",
   schema: "./src/database/schema.ts",
   dialect: "postgresql",
   dbCredentials: {
     url,
-    ssl,
   },
 });
