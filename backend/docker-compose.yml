@@ -3,8 +3,8 @@ services:
     image: postgres:17
     container_name: dev-postgres
     environment:
-      POSTGRES_USER: sax
-      POSTGRES_PASSWORD: saxpw
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
       POSTGRES_DB: balances
     ports:
       - "5432:5432"

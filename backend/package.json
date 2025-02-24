@@ -2,9 +2,10 @@
   "name": "backend",
   "version": "0.1.0",
   "bin": {
-    "backend": "bin/backend.js"
+    "backend": "bin/stack.js"
   },
   "scripts": {
+    "db:push": "drizzle-kit push",
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "watch": "tsc -w",
@@ -24,6 +25,7 @@
     "typescript": "~5.6.3"
   },
   "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.750.0",
     "@hono/node-server": "^1.13.8",
     "aws-cdk-lib": "2.179.0",
     "constructs": "^10.0.0",
@@ -34,11 +36,7 @@
   },
   "packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af",
   "pnpm": {
-    "ignoredBuiltDependencies": [
-      "esbuild"
-    ],
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
+    "ignoredBuiltDependencies": ["esbuild"],
+    "onlyBuiltDependencies": ["aws-sdk", "esbuild"]
   }
 }
